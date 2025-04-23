@@ -26,9 +26,9 @@ function App() {
       </div> */}
      {/* <Registration />
      <Login /> */}
-     {/* <Studentdashboard /> */}
+     <Studentdashboard />
      {/* <Homepage /> */}
-     <Adminlogin />
+     {/* <Adminlogin /> */}
       </div>
   );
 }
