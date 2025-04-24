@@ -1,36 +1,21 @@
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'
+// import Homepage from './for-both/Homepage'
+import { Link, Outlet } from 'react-router'
+// import Homepage from './for-both/Homepage'
 
-import { Link, Outlet } from "react-router";
-import Registration from "./Student/Registration";
-import Login from "./Student/Login";
-import Studentdashboard from "./Student/Studentdashboard";
-import Homepage from "./for-both/Homepage";
-import Adminlogin from "./Admin Dashboard/Adminlogin";
-
-function App() {
+export default function App() {
   return (
-      <div>
-        {/* <div className='flex  h-screen'>
-        <div className='w-1/6 bg-[#4a4e69]'>
-          <h2 className='text-center mt-3 text-xl font-semibold mb-6 text-white'>College Erp</h2>
-          <ul className='mt-3 text-lg ml-10 text-white'>
-          <Link to='/'> <li className='mb-3'><i class="fa-solid fa-house"></i> &nbsp; Home</li></Link>
-           <Link to='/StudentRequest' > <li className='mb-3'><i class="fa-solid fa-user-plus"></i> &nbsp; Student Request</li></Link>
-            <Link to='/VerifiedStudent'> <li className='mb-3'><i class="fa-solid fa-user-check"></i> &nbsp; Verified Student</li></Link>
-            <Link to='/UpdatedStudent'><li className='mb-3'><i class="fa-solid fa-rotate"></i> &nbsp; Updated Student</li></Link>
-          </ul>
+    <div>
+      <nav className='bg-[#4a4e69] text-white p-5 flex justify-between items-center shadow-md'>
+        <h1 className='text-2xl font-semibold'>Student Record System</h1>
+        <div className='flex space-x-6'>
+          <Link to='/' ><h2 className='cursor-pointer hover:text-[#9a8c98] transition'>Home</h2></Link>
+          <Link to='/admin-login'><h2 className='cursor-pointer hover:text-[#9a8c98] transition'>Login as Admin</h2></Link>
+          <Link to='/student-login'> <h2 className='cursor-pointer hover:text-[#9a8c98] transition'>Login as Student</h2></Link>
         </div>
-        <div className='w-5/6 bg-[#f2e9e4]'>
-       <Outlet />
-        </div>
-      </div> */}
-     {/* <Registration />
-     <Login /> */}
-     <Studentdashboard />
-     {/* <Homepage /> */}
-     {/* <Adminlogin /> */}
-      </div>
-  );
-}
+      </nav>
+      <Outlet />
 
-export default App;
+    </div>
+  )
+}

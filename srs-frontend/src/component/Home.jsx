@@ -19,7 +19,7 @@ export default function Home() {
             <p className='text-center mt-2'>30</p>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }
