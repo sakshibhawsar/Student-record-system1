@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
-
+import axios from 'axios'
+import axiosconfig from '../config/axios.config'
+// import { useNavigate } from 'react-router';
 export default function Adminlogin() {
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState('');
+  const [name, setname] = useState('');
+  const [secretkey, setsecretkey] = useState('');
 
+
+  // const navigate = useNavigate();
+  const handleLogin = async () => {
+    try {
+      const res = await axiosconfig.post("/admin-login",
+        {
+          name,
+          secretkey: secretkey
+        });
+      if (res.status === 200) {
+        alert("Login Successful")
+        window.location.href = "/admin-dashboard"
+      }
+    }
+    catch (err) {
+      console.log(err)
+      alert("Login Failed")
+    }
+  }
   return (
     <div className='relative min-h-screen bg-[#f2e9e4] flex items-center justify-center p-4'>
       {/* Admin Login Form */}
       <div
-        className={`bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center border-t-8 border-[#4a4e69] transition duration-300 ${
-          showModal ? 'blur-sm opacity-60' : ''
-        }`}
+        className={`bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center border-t-8 border-[#4a4e69] transition duration-300 ${showModal ? 'blur-sm opacity-60' : ''
+          }`}
       >
         <h2 className='text-2xl font-bold text-[#4a4e69] mb-6'>Admin Login</h2>
 
@@ -18,8 +39,8 @@ export default function Adminlogin() {
           type="text"
           placeholder="Username"
           className='w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4a4e69]'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setname(e.target.value)}
         />
 
         <button
@@ -39,6 +60,8 @@ export default function Adminlogin() {
               type="password"
               placeholder="Secret Code"
               className='w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4a4e69]'
+              value={secretkey}
+              onChange={(e) => setsecretkey(e.target.value)}
             />
             <div className='flex justify-between space-x-4'>
               <button
@@ -50,6 +73,7 @@ export default function Adminlogin() {
               <button
                 onClick={() => {
                   // Handle secret code submission here
+                  handleLogin()
                   setShowModal(false);
                 }}
                 className='w-full bg-[#4a4e69] text-white py-2 rounded-lg hover:bg-[#6c6380] transition'

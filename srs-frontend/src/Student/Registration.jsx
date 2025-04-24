@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import signupIllustration from '../assets/logingirl.png'; // Ensure correct path
+import { Link } from 'react-router';
+import Login from './Login';
 //import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
@@ -30,8 +32,8 @@ export default function Registration() {
 
     return (
         <div className="h-screen flex">
-             {/* Right Side - Illustration */}
-             <div className=" bg-white flex justify-center items-center">
+            {/* Right Side - Illustration */}
+            <div className=" bg-white flex justify-center items-center">
                 <img src={signupIllustration} alt="Signup Illustration" className="w-3/4" />
             </div>
             <div className='bg-gray-400 w-[1px] h-screen'>
@@ -80,11 +82,11 @@ export default function Registration() {
                 </button>
 
                 <p className="mt-6">
-                    Already have an account? <a href="/" className="text-blue-500">Login</a>
+                    Already have an account? <a href='st-login' className="text-blue-500">Login</a>
                 </p>
             </div>
 
-           
+
         </div>
     );
 }

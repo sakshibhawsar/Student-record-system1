@@ -6,7 +6,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-   // const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleLogin = () => {
         const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -27,7 +27,7 @@ export default function Login() {
     return (
         <div className="h-screen flex">
 
-               {/* Right Side - Illustration */}
+            {/* Right Side - Illustration */}
             <div className=" bg-white flex justify-center items-center">
                 <img src={loginIllustration} alt="Login Illustration" className="w-3/4" />
             </div>
@@ -63,11 +63,11 @@ export default function Login() {
                 </button>
 
                 <p className="mt-6">
-                    Don&apos;t have an account? <a href="/signup" className="text-blue-500">Sign up</a>
+                    Don&apos;t have an account? <a href="student-login" className="text-blue-500">Sign up</a>
                 </p>
             </div>
 
-          
+
         </div>
     );
 }
