@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
 import loginIllustration from '../assets/logingirl.png';
-//import { useNavigate } from 'react-router-dom';
+import axiosconfig from '../config/axios.config';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    const handleLogin = () => {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
+    const handleLogin = async () => {
+        try {
+            const res = await axiosconfig.post('/login', { email, password });
 
-        if (!storedUser) {
-            setError("No account found! Please sign up first.");
-            return;
-        }
+            if (res.status === 200) {
+                const student = res.data.student;
 
-        if (email === storedUser.email && password === storedUser.password) {
-            alert("Login successful!");
-            //navigate('/dashboard'); // Redirect to dashboard
-        } else {
-            setError("Invalid email or password!");
+                if (!student.isApproved) {
+                    setError("Your account is not approved by admin yet.");
+                    return;
+                }
+
+                alert("Login successful");
+
+                // Pass only if approved
+                navigate("/student-dashboard", { state: { student } });
+            }
+
+            setEmail('');
+            setPassword('');
+        } catch (err) {
+            console.log(err);
+            setError("Login failed. Please try again.");
         }
     };
 

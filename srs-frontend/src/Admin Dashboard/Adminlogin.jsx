@@ -1,38 +1,45 @@
 import React, { useState } from 'react';
-import axios from 'axios'
-import axiosconfig from '../config/axios.config'
-// import { useNavigate } from 'react-router';
+import axiosconfig from '../config/axios.config';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Adminlogin() {
   const [showModal, setShowModal] = useState(false);
   const [name, setname] = useState('');
   const [secretkey, setsecretkey] = useState('');
 
-
-  // const navigate = useNavigate();
   const handleLogin = async () => {
     try {
-      const res = await axiosconfig.post("/admin-login",
-        {
-          name,
-          secretkey: secretkey
-        });
+      const res = await axiosconfig.post("/admin-login", {
+        name,
+        secretkey
+      });
+
       if (res.status === 200) {
-        alert("Login Successful")
-        window.location.href = "/admin-dashboard"
+        toast.success("Login Successful 🎉", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          window.location.href = "/admin-dashboard";
+        }, 2000); // Delay redirect to show toast
       }
+    } catch (err) {
+      console.log(err);
+      toast.error("Wrong Information", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
-    catch (err) {
-      console.log(err)
-      alert("Login Failed")
-    }
-  }
+  };
+
   return (
     <div className='relative min-h-screen bg-[#f2e9e4] flex items-center justify-center p-4'>
+      {/* Toast Container */}
+      <ToastContainer />
+
       {/* Admin Login Form */}
-      <div
-        className={`bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center border-t-8 border-[#4a4e69] transition duration-300 ${showModal ? 'blur-sm opacity-60' : ''
-          }`}
-      >
+      <div className={`bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center border-t-8 border-[#4a4e69] transition duration-300 ${showModal ? 'blur-sm opacity-60' : ''}`}>
         <h2 className='text-2xl font-bold text-[#4a4e69] mb-6'>Admin Login</h2>
 
         <input
@@ -51,7 +58,7 @@ export default function Adminlogin() {
         </button>
       </div>
 
-      {/* Popup Modal - Positioned absolutely on top */}
+      {/* Modal */}
       {showModal && (
         <div className='absolute inset-0 flex items-center justify-center z-50'>
           <div className='bg-white rounded-xl shadow-xl p-6 w-full max-w-sm text-center border border-[#4a4e69]'>
@@ -72,8 +79,7 @@ export default function Adminlogin() {
               </button>
               <button
                 onClick={() => {
-                  // Handle secret code submission here
-                  handleLogin()
+                  handleLogin();
                   setShowModal(false);
                 }}
                 className='w-full bg-[#4a4e69] text-white py-2 rounded-lg hover:bg-[#6c6380] transition'
