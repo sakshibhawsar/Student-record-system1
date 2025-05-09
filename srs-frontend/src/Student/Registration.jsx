@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
 import signupIllustration from '../assets/logingirl.png'; // Ensure correct path
-import { Link } from 'react-router';
-import Login from './Login';
+import axioscongig from '../config/axios.config'; // Ensure correct path
 //import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [enrollmentnumber, setEnrollmentNumber] = useState('');
+    const [course, setCourse] = useState('');
     const [error, setError] = useState('');
     //const navigate = useNavigate();
 
-    const handleSignup = () => {
-        if (!name || !email || !password || !confirmPassword) {
-            setError("All fields are required!");
-            return;
+    const handleSignup = async () => {
+        try {
+            const register = await axioscongig.post('/register', {
+                name,
+                email,
+                enrollmentnumber,
+                course
+            })
+            console.log(register);
+            setName('');
+            setEmail('');
+            setEnrollmentNumber('');
+            setCourse('');
+            if (register.status === 201) {
+                alert("Registration successful,Your account is under review.")
+            }
         }
-        if (password !== confirmPassword) {
-            setError("Passwords do not match!");
-            return;
+        catch (err) {
+            console.log(err);
+            setError("Registration failed. Please try again.");
         }
-
-        const userData = { name, email, password };
-        localStorage.setItem("user", JSON.stringify(userData)); // Store in localStorage
-
-        setError('');
-        alert("Account created successfully! 🎉");
-        //navigate('/'); // Redirect to login page
-    };
-
+    }
     return (
         <div className="h-screen flex">
             {/* Right Side - Illustration */}
@@ -58,22 +61,23 @@ export default function Registration() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
                 <input
-                    type="password"
-                    placeholder="Password"
+                    type="text"
+                    placeholder="Course"
                     className="w-full p-3 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={course}
+                    onChange={(e) => setCourse(e.target.value)}
                 />
 
                 <input
-                    type="password"
-                    placeholder="Confirm Password"
+                    type="Enrollment Number"
+                    placeholder="enrollmentnumber"
                     className="w-full p-3 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={enrollmentnumber}
+                    onChange={(e) => setEnrollmentNumber(e.target.value)}
                 />
+
+
 
                 {error && <p className="text-red-500">{error}</p>}
 
@@ -88,5 +92,5 @@ export default function Registration() {
 
 
         </div>
-    );
+    )
 }
